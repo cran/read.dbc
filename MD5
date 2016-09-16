@@ -1,9 +1,9 @@
-ee14961003c4117fc5097bbe9d74cdce *DESCRIPTION
+1281c16bfc5f86e9d45a6771c7d0a45b *DESCRIPTION
 d787d378922eea5d0feafe35643a69aa *NAMESPACE
 36b56793a747435bc5da0157fea1cd97 *R/dbc2dbf.R
 8473db5af9a95f54cd94e70fcf902fab *R/read.dbc.R
-0e72e381d528da90303641fc9869a82d *README.md
-9208c653ed21da9f0b6336fa8af40ed4 *inst/CHANGELOG.md
+372b41711da2c803f999649082a011ff *README.md
+e333571f9ed68ebc191ac7d4e83417d2 *inst/CHANGELOG.md
 3f617b038a300acc3a9e6b32effcf99c *inst/files/prepare_storm_data.R
 d5acc2bf92736a80aacd8af08f3c2ee5 *inst/files/sids.dbc
 e97d0180f683d3d8d054ca85dc4cdd8c *inst/files/storm.dbc
@@ -11,4 +11,4 @@ d969a2f795a5a9c6f19bde212aed4a12 *man/dbc2dbf.Rd
 0e979fbf4e1f0a75ae50b234f6062ae7 *man/read.dbc.Rd
 c2b609790a5a14506083d6065022cc47 *src/blast.c
 fa67f1dd7e681b188546423884fe25ec *src/blast.h
-3ed0d2cda9e026d8e272def4ef8b02e4 *src/dbc2dbf.c
+fa1a217226f591d1605d186e1b8a3326 *src/dbc2dbf.c
