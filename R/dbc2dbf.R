@@ -39,7 +39,7 @@
 #' input  <- system.file("files/sids.dbc", package = "read.dbc")
 #'
 #' # Output file name
-#' output <- tempfile(fileext = ".dbc")
+#' output <- tempfile(fileext = ".dbf")
 #'
 #' # The call returns TRUE on success
 #' if( dbc2dbf(input.file = input, output.file = output) ) {
@@ -54,8 +54,20 @@
 #' \code{blast-dbf}, DBC to DBF command-line decompression tool: \url{https://github.com/eaglebh/blast-dbf}
 #'
 dbc2dbf <- function(input.file, output.file) {
-        if( !file.exists(input.file) )
-                stop("Input file does not exist.")
-        out <- .C("dbc2dbf", input = as.character(path.expand(input.file)), output = as.character(path.expand(output.file)))
-        file.exists(output.file)
+        ret_code <- 0
+        error_str <- paste(rep(" ", 256), collapse="") # buffer for error string
+        out <- .C("dbc2dbf",
+                  input = as.character(path.expand(input.file)),
+                  output = as.character(path.expand(output.file)),
+                  ret_code = as.integer(ret_code),
+                  error_str = as.character(error_str))
+
+        if (out$ret_code != 0) {
+            error_message <- trimws(out$error_str)
+            if (nchar(error_message) == 0) {
+                error_message <- paste("Unknown error occurred (code", out$ret_code, ")")
+            }
+            stop(error_message)
+        }
+        return(TRUE)
 }

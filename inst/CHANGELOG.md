@@ -1,5 +1,24 @@
 ## CHANGELOG.md
 
+### Version 1.2.0 (2025-11-19)
+
+* **New Feature**: Added `dbf2dbc()` function to compress standard DBF files into DBC format (Experimental).
+* **Housekeeping**: Removed vignette builder and `knitr`/`rmarkdown` dependencies to streamline package dependencies.
+* **Bug Fix**: Fixed compilation error on systems requiring explicit `stdint.h` inclusion (e.g., for `uint16_t` in `dbf2dbc.c`).
+
+### Version 1.1.1 (2025-11-19)
+
+* **Bug Fix**: Fixed a critical buffer overflow/stack corruption issue when decompressing files with large backward references (e.g., `sids.dbc`).
+    * Increased internal sliding window buffer (`MAXWIN`) from 4KB to 16KB to support these files.
+    * Added a safety boundary check to explicitly return an error if a file requires a larger buffer, preventing crashes/memory corruption.
+
+### Version 1.1.0 (2025-11-19)
+
+* **Thread Safety**: Major C code refactoring to ensure thread safety. Removed static buffers and global state, making the package safe for concurrent use (e.g., `parallel::mclapply`).
+* **Modernization**: Updated C code to use modern `stdint.h` types and removed legacy `setjmp`/`longjmp` error handling in favor of explicit error codes.
+* **Robustness**: Improved error handling with detailed messages for I/O errors, memory allocation failures, and corrupted files.
+* **Safety**: Replaced Variable Length Arrays (VLAs) with heap allocation to prevent potential stack overflows with large headers.
+
 ### Version 1.0.7
 
 * Removed broken links

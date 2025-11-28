@@ -21,7 +21,7 @@
 #' DBC is the extension for compressed DBF files (from the 'XBASE' family of databases).
 #' This is a proprietary file format used by the Brazilian government to publish public healthcare data, and it is not related to the FoxPro or CANdb DBC file formats.
 #'
-#' The \code{read.dbc} function will decompress the input DBC file into a temporary DBF file and call \code{\link{read.dbf}} from the \code{foreign} package to read it into a data frame.
+#' The \code{read.dbc} function will decompress the input DBC file into a temporary DBF file and call \code{\link[foreign]{read.dbf}} from the \code{foreign} package to read it into a data frame.
 #'
 #' @note
 #' DATASUS is the name of the Department of Informatics of the Brazilian Health System (Sistema Único de Saúde - SUS) and is responsible for publishing public healthcare data in Brazil.
@@ -31,7 +31,8 @@
 #'
 #' Neither this project, nor its author, has any association with the Brazilian government.
 #' @param file The name of the DBC file (including extension)
-#' @param ... Further arguments to be passed to \code{\link{read.dbf}}
+#' @param ... Further arguments to be passed to \code{\link[foreign]{read.dbf}}
+#' @importFrom foreign read.dbf
 #' @return A data.frame of the data from the DBC file.
 #' @keywords dbc datasus
 #' @export
@@ -54,15 +55,15 @@ read.dbc <- function(file, ...) {
         # Output file name
         out <- tempfile(fileext = ".dbf")
 
-        # Decompress the dbc file using the blast library wrapper.
-        if( dbc2dbf(file, out) ) {
-                # Use read.dbf from foreing package to read the uncompressed file
-                df <- foreign::read.dbf(out, ...)
+        # Decompress the dbc file. dbc2dbf will error out if it fails.
+        dbc2dbf(file, out)
 
-                # Delete temp file
-                file.remove(out)
+        # Use read.dbf from foreing package to read the uncompressed file
+        df <- foreign::read.dbf(out, ...)
 
-                # Return data frame
-                return(df)
-        }
+        # Delete temp file
+        file.remove(out)
+
+        # Return data frame
+        return(df)
 }
